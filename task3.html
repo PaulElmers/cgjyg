@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Фрукти</title>
+</head>
+<body>
+    <h1>Список фруктів</h1>
+    <div id="fruit-list"></div>
+
+    <h2>Пошук фрукта</h2>
+    <form id="search-form">
+        <input type="text" id="fruit-name" placeholder="Введіть назву фрукта">
+        <button type="submit">Знайти</button>
+    </form>
+    <div id="search-result"></div>
+
+    <script>
+        let fruits = ["Яблуко", "Апельсин", "Банан", "Ківі", "Ананас"];
+        fruits.sort();
+
+        function displayFruitsList(arr) {
+            let fruitListDiv = document.getElementById('fruit-list');
+            let ul = document.createElement('ul');
+            arr.forEach(fruit => {
+                let li = document.createElement('li');
+                li.textContent = fruit;
+                ul.appendChild(li);
+            });
+            fruitListDiv.appendChild(ul);
+        }
+
+        function findFruitIndex(arr, fruitName) {
+            fruitName = fruitName.toLowerCase();
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].toLowerCase() === fruitName) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        displayFruitsList(fruits);
+
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let fruitName = document.getElementById('fruit-name').value;
+            let index = findFruitIndex(fruits, fruitName);
+            let resultDiv = document.getElementById('search-result');
+            if (index !== -1) {
+                resultDiv.textContent = `Фрукт "${fruitName}" знайдено на індексі: ${index}`;
+            } else {
+                resultDiv.textContent = `Фрукт "${fruitName}" не знайдено`;
+            }
+        });
+    </script>
+</body>
+</html>

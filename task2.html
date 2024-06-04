@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Робота з масивами</title>
+</head>
+<body>
+    <h1>Масиви випадкових чисел</h1>
+    <div id="array1-display"></div>
+    <div id="array2-display"></div>
+
+    <h2>Об'єднання масивів без повторень</h2>
+    <div id="union-display"></div>
+
+    <h2>Загальні елементи без повторень</h2>
+    <div id="intersection-display"></div>
+
+    <h2>Елементи з першого масиву, яких немає у другому</h2>
+    <div id="difference-display"></div>
+
+    <script>
+        let array1 = Array.from({ length: 10 }, () => Math.floor(Math.random() * 100));
+        let array2 = Array.from({ length: 5 }, () => Math.floor(Math.random() * 100));
+
+        function displayArray(arr, elementId) {
+            document.getElementById(elementId).textContent = 'Масив: ' + arr.join(', ');
+        }
+
+        function mergeArraysUnique(arr1, arr2) {
+            let mergedArray = [...new Set([...arr1, ...arr2])];
+            return mergedArray;
+        }
+
+        function intersectArraysUnique(arr1, arr2) {
+            let intersection = arr1.filter(value => arr2.includes(value));
+            return [...new Set(intersection)];
+        }
+
+        function differenceArrays(arr1, arr2) {
+            let difference = arr1.filter(value => !arr2.includes(value));
+            return difference;
+        }
+
+        displayArray(array1, 'array1-display');
+        displayArray(array2, 'array2-display');
+
+        let unionArray = mergeArraysUnique(array1, array2);
+        document.getElementById('union-display').textContent = 'Об\'єднаний масив без повторень: ' + unionArray.join(', ');
+
+        let intersectionArray = intersectArraysUnique(array1, array2);
+        document.getElementById('intersection-display').textContent = 'Загальні елементи без повторень: ' + intersectionArray.join(', ');
+
+        let differenceArray = differenceArrays(array1, array2);
+        document.getElementById('difference-display').textContent = 'Елементи з першого масиву, яких немає у другому: ' + differenceArray.join(', ');
+    </script>
+</body>
+</html>

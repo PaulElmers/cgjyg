@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Масив випадкових чисел</title>
+</head>
+<body>
+    <h1>Масив випадкових чисел</h1>
+    <div id="array-display"></div>
+    <div id="even-elements"></div>
+    <div id="sum-elements"></div>
+    <div id="max-element"></div>
+
+    <h2>Додавання елемента в масив</h2>
+    <form id="add-form">
+        <input type="number" id="add-element" placeholder="Елемент">
+        <input type="number" id="add-index" placeholder="Індекс">
+        <button type="submit">Додати</button>
+    </form>
+    <div id="add-result"></div>
+
+    <h2>Видалення елемента з масиву</h2>
+    <form id="remove-form">
+        <input type="number" id="remove-index" placeholder="Індекс">
+        <button type="submit">Видалити</button>
+    </form>
+    <div id="remove-result"></div>
+
+    <script>
+
+        let array = Array.from({ length: 10 }, () => Math.floor(Math.random() * 100));
+
+        function displayArray(arr) {
+            document.getElementById('array-display').textContent = 'Масив: ' + arr.join(', ');
+        }
+
+        function displayEvenElements(arr) {
+            let evenElements = arr.filter(num => num % 2 === 0);
+            document.getElementById('even-elements').textContent = 'Парні елементи: ' + evenElements.join(', ');
+        }
+
+        function sumArrayElements(arr) {
+            let sum = arr.reduce((acc, num) => acc + num, 0);
+            document.getElementById('sum-elements').textContent = 'Сума елементів: ' + sum;
+            return sum;
+        }
+
+        function getMaxElement(arr) {
+            let max = Math.max(...arr);
+            document.getElementById('max-element').textContent = 'Максимальний елемент: ' + max;
+            return max;
+        }
+
+        function addElementAtIndex(arr, index, element) {
+            arr.splice(index, 0, element);
+            return arr;
+        }
+
+        function removeElementAtIndex(arr, index) {
+            arr.splice(index, 1);
+            return arr;
+        }
+
+        displayArray(array);
+        displayEvenElements(array);
+        sumArrayElements(array);
+        getMaxElement(array);
+
+        document.getElementById('add-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let element = parseInt(document.getElementById('add-element').value);
+            let index = parseInt(document.getElementById('add-index').value);
+            if (!isNaN(element) && !isNaN(index) && index >= 0 && index <= array.length) {
+                array = addElementAtIndex(array, index, element);
+                displayArray(array);
+                document.getElementById('add-result').textContent = 'Елемент додано.';
+            } else {
+                document.getElementById('add-result').textContent = 'Некоректний індекс або елемент.';
+            }
+        });
+
+        document.getElementById('remove-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let index = parseInt(document.getElementById('remove-index').value);
+            if (!isNaN(index) && index >= 0 && index < array.length) {
+                array = removeElementAtIndex(array, index);
+                displayArray(array);
+                document.getElementById('remove-result').textContent = 'Елемент видалено.';
+            } else {
+                document.getElementById('remove-result').textContent = 'Некоректний індекс.';
+            }
+        });
+    </script>
+</body>
+</html>
